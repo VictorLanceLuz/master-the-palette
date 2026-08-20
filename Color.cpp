@@ -68,6 +68,26 @@ const int &Color::operator[](int index) const
     }
 }
 
+Color Color::operator+(const Color &other) const
+{
+    const auto newRedChannel = (redChannel + other.redChannel) / 2;
+    const auto newGreenChannel = (greenChannel + other.greenChannel) / 2;
+    const auto newBlueChannel = (blueChannel + other.blueChannel) / 2;
+    return {newRedChannel, newGreenChannel, newBlueChannel};
+}
+
+Color Color::operator+(const std::vector<int> adjustments) const
+{
+    int r = redChannel + (adjustments.size() > 0 ? adjustments[0] : 0); // if not empty, use value, else use '0'. 
+    int g = greenChannel + (adjustments.size() > 1 ? adjustments[1] : 0); // if 2nd pos empty, use value, etc.
+    int b = blueChannel + (adjustments.size() > 2 ? adjustments[2] : 0); 
+    r = CLIP(r) // these will push high values to valid values: 0-255
+    g = CLIP(g)
+    b = CLIP(b)
+    
+    return Color(r, g, b);
+}
+
 std::ostream &operator<<(std::ostream &os, const Color &color)
 {
     os << '#' << std::hex << std::setfill('0') << std::setw(2) << color.red()

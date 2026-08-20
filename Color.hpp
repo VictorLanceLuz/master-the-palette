@@ -21,6 +21,11 @@ public:
 	// version for read-only access when object itself is `const`
 	const int& operator[](int index) const;
 
+	// operator + for two different color mixing
+	Color operator+(const Color& other) const;
+
+	// operator + for a specified offset application.
+	Color operator+(const std::vector<int> adjustments) const;
 private:
 	int redChannel;
 	int greenChannel;

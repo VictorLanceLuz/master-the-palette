@@ -15,4 +15,16 @@ int main() {
 	Color emerald = Color::fromHexLiteral("#50c878");
 	Color sunset = Color::fromHexLiteral("#ff4500");
 	Color ocean  = Color::fromHexLiteral("#1e90ff");
+
+	std::cout << emerald[0] << ", " << emerald[1] << ", " << emerald[2] << std::endl;
+	
+	// blending colors
+	Color dusk = sunset + ocean;
+	std::cout << "Dusk: " << dusk << std::endl;
+
+	// using adjustments
+	std::vector<int> warmUp = {30, -10, -10};
+	dusk += warmUp;
+	std::cout << "Dusk after adjustments: " << dusk << std::endl;
 }
+	
