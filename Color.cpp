@@ -81,11 +81,52 @@ Color Color::operator+(const std::vector<int> adjustments) const
     int r = redChannel + (adjustments.size() > 0 ? adjustments[0] : 0); // if not empty, use value, else use '0'. 
     int g = greenChannel + (adjustments.size() > 1 ? adjustments[1] : 0); // if 2nd pos empty, use value, etc.
     int b = blueChannel + (adjustments.size() > 2 ? adjustments[2] : 0); 
-    r = CLIP(r) // these will push high values to valid values: 0-255
-    g = CLIP(g)
-    b = CLIP(b)
+    r = CLIP(r); // these will push high values to valid values: 0-255
+    g = CLIP(g);
+    b = CLIP(b);
+
+    return Color(r, g, b);
+}
+
+Color& Color::operator++()
+{
+    redChannel = CLIP(++redChannel);
+    greenChannel = CLIP(++greenChannel);
+    blueChannel = CLIP(++blueChannel);
+    return *this;
+}
+
+Color &Color::operator--()
+{
+    redChannel = CLIP(--redChannel);
+    greenChannel = CLIP(--greenChannel);
+    blueChannel = CLIP(--blueChannel);
+    return *this;
+}
+
+Color Color::operator*(int scale) const
+{
+    const int r = CLIP(redChannel * scale); 
+    const int g = CLIP(greenChannel * scale); 
+    const int b = CLIP(blueChannel * scale);
+
+    return Color(r, g, b); 
+}
+
+Color Color::operator()(int (*transform)(int)) const
+{
+    const int r = CLIP(transform(redChannel));
+    const int g = CLIP(transform(greenChannel)); 
+    const int b = CLIP(transform(blueChannel));
     
     return Color(r, g, b);
+}
+
+bool Color::operator==(const Color& other) const
+{
+    return redChannel == other.redChannel && 
+            greenChannel == other.greenChannel &&    
+            blueChannel == other.blueChannel;
 }
 
 std::ostream &operator<<(std::ostream &os, const Color &color)

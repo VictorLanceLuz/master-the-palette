@@ -26,6 +26,18 @@ public:
 
 	// operator + for a specified offset application.
 	Color operator+(const std::vector<int> adjustments) const;
+
+	// operator prefix ++ and prefix --.
+	Color& operator++();
+
+	Color& operator--();
+
+	Color operator*(int scale) const; 
+
+	Color operator()(int (*transform)(int)) const;
+
+	bool operator==(const Color& other) const;
+
 private:
 	int redChannel;
 	int greenChannel;
